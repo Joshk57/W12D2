@@ -6,6 +6,7 @@ import './index.css';
 import App from './App';
 import configureStore from './store';
 import csrfFetch, { restoreCSRF } from './store/csrf';
+import { login, logout } from './store/session';
 
 
 const store = configureStore();
@@ -13,6 +14,8 @@ const store = configureStore();
 if (process.env.NODE_ENV !== 'production') {
   window.store = store;
   window.csrfFetch = csrfFetch;
+  window.login = login;
+  window.logout = logout;
 }
 
 const renderApp = () => {
