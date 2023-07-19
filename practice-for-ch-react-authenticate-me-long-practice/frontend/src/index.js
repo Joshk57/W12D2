@@ -5,8 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import configureStore from './store';
-import csrfFetch, { restoreCSRF } from './store/csrf';
-import { login, logout } from './store/session';
+import csrfFetch from './store/csrf';
+import { login, logout, restoreSession } from './store/session';
 
 
 const store = configureStore();
@@ -27,8 +27,9 @@ const renderApp = () => {
   );  
 }
 
-if (sessionStorage.getItem('X-CSRF-Token') === null) {
-  restoreCSRF().then(renderApp);
+if (sessionStorage.getItem('currentUser') === null
+  || sessionStorage.getItem('X-CSRF-Token') === null) {
+    store.dispatch(restoreSession()).then(renderApp);
 } else {
   renderApp();
 }
